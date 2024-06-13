@@ -7,7 +7,7 @@ defineProps<HippodromeRowProps>();
 <template>
   <tr>
     <td>
-      <hippodrome-number :number="1"></hippodrome-number>
+      <hippodrome-number :number="number"></hippodrome-number>
     </td>
     <td class="border-y-2 border-dashed border-black w-80">
       <img src="/horse-running.svg" alt="" width="80" height="80" />

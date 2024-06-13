@@ -6,6 +6,15 @@ import HippodromeRow from "@components/HippodromeRow/HippodromeRow.vue";
     <table class="table-fixed border">
       <tbody>
         <hippodrome-row :number="1"></hippodrome-row>
+        <hippodrome-row :number="2"></hippodrome-row>
+        <hippodrome-row :number="3"></hippodrome-row>
+        <hippodrome-row :number="4"></hippodrome-row>
+        <hippodrome-row :number="5"></hippodrome-row>
+        <hippodrome-row :number="6"></hippodrome-row>
+        <hippodrome-row :number="7"></hippodrome-row>
+        <hippodrome-row :number="8"></hippodrome-row>
+        <hippodrome-row :number="9"></hippodrome-row>
+        <hippodrome-row :number="10"></hippodrome-row>
       </tbody>
     </table>
   </div>
