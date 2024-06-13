@@ -5,7 +5,11 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
+    "baseUrl": "./",
+    "types": ["node"],
+    "paths": {
+      "@components/*": ["src/components/*"]
+    },
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -26,7 +30,8 @@
     "src/**/*.vue",
     "eslint.config.js",
     "postcss.config.js",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "vite-env.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
