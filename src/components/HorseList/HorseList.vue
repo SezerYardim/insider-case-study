@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
-import { useStore } from "src/stores/store";
+import { useStore } from "@src/stores/store";
 
 const store = useStore();
 </script>

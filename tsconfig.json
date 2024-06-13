@@ -8,7 +8,8 @@
     "baseUrl": "./",
     "types": ["node"],
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@src/*": ["src/*"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -33,7 +34,7 @@
     "tailwind.config.js",
     "vite-env.d.ts",
     "vuex.d.ts",
-    "store.d.ts"
+    "app-store.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
