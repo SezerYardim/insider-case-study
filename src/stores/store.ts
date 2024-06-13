@@ -1,14 +1,47 @@
-import { createStore } from "vuex";
+import { Store, createStore, useStore as baseUseStore } from "vuex";
+import { State } from "./state.interface";
+import { InjectionKey } from "vue";
 
+const storeKey: InjectionKey<Store<State>> = Symbol();
 export const store = createStore({
   state() {
     return {
-      count: 0,
+      horseList: [
+        {
+          name: "Ada Lovelace",
+          condition: 20,
+          color: "Blue",
+        },
+        {
+          name: "Ada Lovelace",
+          condition: 20,
+          color: "Blue",
+        },
+        {
+          name: "Ada Lovelace",
+          condition: 20,
+          color: "Blue",
+        },
+        {
+          name: "Ada Lovelace",
+          condition: 20,
+          color: "Blue",
+        },
+        {
+          name: "Ada Lovelace",
+          condition: 20,
+          color: "Blue",
+        },
+        {
+          name: "Ada Lovelace",
+          condition: 20,
+          color: "Blue",
+        },
+      ],
     };
   },
-  mutations: {
-    increment(state) {
-      state.count++;
-    },
-  },
 });
+
+export function useStore() {
+  return baseUseStore(storeKey);
+}

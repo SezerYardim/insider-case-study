@@ -31,7 +31,9 @@
     "eslint.config.js",
     "postcss.config.js",
     "tailwind.config.js",
-    "vite-env.d.ts"
+    "vite-env.d.ts",
+    "vuex.d.ts",
+    "store.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

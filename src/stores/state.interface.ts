@@ -3,3 +3,7 @@ export interface HorseListItem {
   condition: number;
   color: string;
 }
+
+export interface State {
+  horseList: Array<HorseListItem>;
+}

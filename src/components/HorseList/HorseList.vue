@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <DataTable :value="horseList">
+    <DataTable :value="store.state.horseList">
       <template #header>
         <p>Horse List</p>
       </template>
@@ -27,41 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import DataTable from "primevue/datatable";
-import { ref } from "vue";
-import { HorseListItem } from "./HorseList.interface";
 import Column from "primevue/column";
+import DataTable from "primevue/datatable";
+import { useStore } from "src/stores/store";
 
-const horseList = ref<Array<HorseListItem>>([
-  {
-    name: "Ada Lovelace",
-    condition: 20,
-    color: "Blue",
-  },
-  {
-    name: "Ada Lovelace",
-    condition: 20,
-    color: "Blue",
-  },
-  {
-    name: "Ada Lovelace",
-    condition: 20,
-    color: "Blue",
-  },
-  {
-    name: "Ada Lovelace",
-    condition: 20,
-    color: "Blue",
-  },
-  {
-    name: "Ada Lovelace",
-    condition: 20,
-    color: "Blue",
-  },
-  {
-    name: "Ada Lovelace",
-    condition: 20,
-    color: "Blue",
-  },
-]);
+const store = useStore();
 </script>
