@@ -1,4 +1,3 @@
-import { HorseListItem } from "@components/HorseList/HorseList.interface";
 import { Store } from "vuex";
 import { State } from "./stores/state.interface";
 
