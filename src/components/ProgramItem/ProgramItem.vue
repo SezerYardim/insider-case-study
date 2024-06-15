@@ -15,8 +15,8 @@ defineProps<ProgramItemProps>();
         :key="columnDefinition.field"
       >
         <Column
-          body-class="text-sm"
-          header-class="text-sm bg-slate-100"
+          body-class="text-sm h-10 p-2"
+          header-class="text-sm bg-slate-100 h-10 p-2"
           v-bind="columnDefinition"
         ></Column>
       </template>
