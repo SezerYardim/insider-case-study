@@ -37,7 +37,8 @@ function generateHorseName() {
 }
 
 function randomCondition() {
-  return Math.round(Math.random() * 100) || 1;
+  const condition = Math.round(Math.random() * 100);
+  return condition > 50 ? condition : condition + 50; // to make it more competitive :)
 }
 function randomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
@@ -89,7 +90,7 @@ export function shuffleArray<T>(array: T[]): T[] {
 export function pickRandomElements<T>(array: T[], n: number): T[] {
   if (n > array.length) {
     throw new Error(
-      "The number of elements to pick is greater than the array length"
+      "The number of elements to pick is greater than the array length",
     );
   }
   const shuffledArray = shuffleArray(array);

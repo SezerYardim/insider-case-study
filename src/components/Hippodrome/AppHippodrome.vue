@@ -5,17 +5,19 @@ import HippodromeRow from "@components/HippodromeRow/HippodromeRow.vue";
   <div class="w-full py-12">
     <table class="table-fixed border w-full">
       <tbody>
-        <hippodrome-row :number="1"></hippodrome-row>
-        <hippodrome-row :number="2"></hippodrome-row>
-        <hippodrome-row :number="3"></hippodrome-row>
-        <hippodrome-row :number="4"></hippodrome-row>
-        <hippodrome-row :number="5"></hippodrome-row>
-        <hippodrome-row :number="6"></hippodrome-row>
-        <hippodrome-row :number="7"></hippodrome-row>
-        <hippodrome-row :number="8"></hippodrome-row>
-        <hippodrome-row :number="9"></hippodrome-row>
-        <hippodrome-row :number="10"></hippodrome-row>
+        <hippodrome-row
+          v-for="horse in $store.state.race.activeRun?.participants"
+          :key="horse.horse?.name"
+          :number="horse.position"
+          :distance="horse.distance"
+        />
       </tbody>
     </table>
+    <div class="flex justify-end">
+      <p class="mx-auto text-red-600 text-lg font-semibold">
+        {{ $store.state.race.activeRun?.name }}
+      </p>
+      <p class="text-red-600 text-lg font-semibold">Finish</p>
+    </div>
   </div>
 </template>

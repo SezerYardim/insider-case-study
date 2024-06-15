@@ -8,25 +8,23 @@ export interface State {
   horseList: Array<Horse>;
   race: Race;
 }
-interface Result {
-  position: number;
-  horse: Horse;
-}
+
 export interface Run {
-  done: boolean;
   type: RunType;
   name: string;
-  result: Result[];
   participants: Participant[];
 }
-interface Participant {
-  horse: Horse;
-  position: number;
+export interface Participant {
+  horse: Horse | undefined;
+  position: number | undefined;
+  distance: number;
 }
 
-interface Race {
+export interface Race {
   runs: Run[];
-  participants: Participant[];
+  results: Run[];
+  activeRun: Run | null;
+  runIndex: number;
 }
 
 export type RunType = "1200m" | "1400m" | "1600m" | "1800m" | "2000m" | "2200m";

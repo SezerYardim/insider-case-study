@@ -10,7 +10,10 @@ defineProps<ProgramItemProps>();
       <template #header>
         <p>{{ run.name }}</p>
       </template>
-      <template v-for="columnDefinition in columnDefinitions">
+      <template
+        v-for="columnDefinition in columnDefinitions"
+        :key="columnDefinition.field"
+      >
         <Column
           body-class="text-sm"
           header-class="text-sm bg-slate-100"

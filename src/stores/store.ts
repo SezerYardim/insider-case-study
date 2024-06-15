@@ -1,12 +1,12 @@
-import { Store, createStore, useStore } from "vuex";
-import { Horse, RunType, State } from "./state.interface";
-import { InjectionKey } from "vue";
 import {
   generateHorse,
   getOrdinalSuffix,
   pickRandomElements,
   runs,
 } from "@src/helpers/helpers";
+import { InjectionKey } from "vue";
+import { Store, createStore, useStore } from "vuex";
+import { Participant, Race, Run, State } from "./state.interface";
 
 export const storeKey: InjectionKey<Store<State>> = Symbol();
 
@@ -18,45 +18,96 @@ export const store = createStore<State>({
         .map(() => generateHorse()),
       race: {
         runs: runs.map((run) => ({
-          done: false,
-          result: [],
           name: "",
           type: run,
           participants: [],
         })),
-        participants: [],
+        results: [],
+        activeRun: null,
+        runIndex: 0,
       },
     };
   },
   mutations: {
-    generateRace(state) {
-      state.race = {
-        runs: runs.map((run, index) => ({
-          done: false,
-          result: [],
-          type: run,
-          name: getOrdinalSuffix(index + 1) + " " + "Lap" + " " + run,
-          participants: pickRandomElements(state.horseList, 10).map(
-            (item, index) => ({ horse: item, position: index + 1 })
-          ),
-        })),
-        participants: pickRandomElements(state.horseList, 10).map(
-          (item, index) => ({ horse: item, position: index + 1 })
-        ),
-      };
+    setActiveRun(state, payload: Run) {
+      state.race.activeRun = payload;
     },
-    finish(state: State, payload: { run: RunType; horse: Horse }) {
-      const runToFinish = state.race.runs.find(
-        (item) => item.type === payload.run
+    setRunIndex(state, runIndex: number) {
+      state.race.runIndex = runIndex;
+    },
+    setRuns(state, runs: Run[]) {
+      state.race.runs = runs;
+    },
+    setResults(state, results: Run[]) {
+      state.race.results = results;
+    },
+    setRace(state, race: Race) {
+      state.race = race;
+    },
+    start(state, payload: { participants: Participant[] }) {
+      if (!state.race.activeRun) return;
+      state.race.activeRun.participants = payload.participants;
+    },
+  },
+  actions: {
+    generateRace({ state, commit }) {
+      commit(
+        "setRuns",
+        runs.map((run, index) => {
+          return {
+            type: run,
+            name: getOrdinalSuffix(index + 1) + " " + "Lap" + " " + run,
+            participants: pickRandomElements(state.horseList, 10).map(
+              (item, index) => ({
+                horse: item,
+                position: index + 1,
+                distance: 0,
+              }),
+            ),
+          };
+        }),
       );
-      if (!runToFinish) return;
-      runToFinish.result.push({
-        horse: payload.horse,
-        position: runToFinish.result.length + 1,
+      commit(
+        "setResults",
+        state.race.runs.map((item) => ({
+          ...item,
+          participants: item.participants.map(() => ({
+            position: undefined,
+            horse: undefined,
+            distance: 0,
+          })),
+        })),
+      );
+      commit("setActiveRun", state.race.runs[state.race.runIndex]);
+    },
+    startRace: async ({ state, commit }) => {
+      if (!state.race.activeRun) return;
+      let position = 0;
+      const racePromises = state.race.activeRun.participants.map<
+        Promise<Participant>
+      >((item) => {
+        return new Promise((resolve) => {
+          const raceInterval = setInterval(() => {
+            if (item.distance < 90) {
+              if (item.horse) {
+                item.distance += item.horse.condition / 100;
+              }
+            } else {
+              const participant = { ...item, position };
+              clearInterval(raceInterval);
+              state.race.results[state.race.runIndex].participants[position] = {
+                ...participant,
+                position: ++position,
+              };
+              resolve({ ...participant, position: position });
+            }
+          }, 100);
+        });
       });
-      if (runToFinish.result.length === 10) {
-        runToFinish.done = true;
-      }
+      Promise.all(racePromises).then(() => {
+        commit("setRunIndex", state.race.runIndex + 1);
+        commit("setActiveRun", state.race.runs[state.race.runIndex]);
+      });
     },
   },
 });

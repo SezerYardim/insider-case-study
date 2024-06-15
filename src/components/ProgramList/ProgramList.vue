@@ -6,7 +6,7 @@ defineProps<ProgramListProps>();
 <template>
   <div>
     <p class="px-6 py-3 text-white" :class="labelClass">{{ label }}</p>
-    <template v-for="run in $store.state.race.runs" :key="run.name">
+    <template v-for="run in runs" :key="run.name">
       <program-item
         v-if="run.participants.length"
         :run="run"

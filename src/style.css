@@ -8,3 +8,11 @@
     @tailwind components;
     @tailwind utilities;
 }
+
+.border-y-dashed{
+    border-bottom-style: dashed;
+    border-top-style: dashed;
+}
+.border-r-solid {
+    border-right-style: solid;
+}
