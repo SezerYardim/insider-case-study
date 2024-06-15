@@ -65,7 +65,7 @@ export const store = createStore<State>({
             participants: pickRandomElements(state.horseList, 10).map(
               (item, index) => ({
                 horse: item,
-                position: index + 1,
+                position: (index + 1).toString(),
                 distance: 0,
               })
             ),
@@ -85,6 +85,10 @@ export const store = createStore<State>({
       );
       commit("setRunIndex", 0);
       commit("setActiveRun", state.race.runs[state.race.runIndex]);
+      state.race.activeIntervals.forEach((interval) => {
+        clearInterval(interval);
+      });
+      commit("setActiveIntervals", []);
     },
     startRace: async ({ state, commit }) => {
       if (state.race.activeIntervals.length) {
@@ -94,27 +98,30 @@ export const store = createStore<State>({
         commit("setActiveIntervals", []);
         return;
       }
-      if (!state.race.activeRun) return;
+      if (!state.race.activeRun?.participants.some(Boolean)) return;
       let position = 0;
       const racePromises = state.race.activeRun.participants.map<
         Promise<Participant>
       >((item) => {
         const finishPromise: Promise<Participant> = new Promise((resolve) => {
-          const raceInterval = setInterval(() => {
+          const runHorse = () => {
             if (item.distance < 90) {
               if (item.horse) {
                 item.distance += item.horse.condition / 25;
               }
             } else {
-              const participant = { ...item, position };
+              const participant = { ...item, position: position.toString() };
               clearInterval(raceInterval);
               state.race.results[state.race.runIndex].participants[position] = {
                 ...participant,
-                position: position ? (++position).toString() : undefined,
+                position:
+                  position !== undefined ? (++position).toString() : undefined,
               };
               resolve({ ...participant, position: position.toString() });
             }
-          }, 100);
+          };
+          runHorse();
+          const raceInterval = setInterval(runHorse, 200);
           commit("setActiveIntervals", [
             ...state.race.activeIntervals,
             raceInterval,
@@ -123,7 +130,7 @@ export const store = createStore<State>({
         return finishPromise;
       });
       Promise.all(racePromises).then(() => {
-        if (state.race.runIndex > 5) {
+        if (state.race.runIndex > 4) {
           return;
         } else {
           commit("setRunIndex", state.race.runIndex + 1);
@@ -131,6 +138,15 @@ export const store = createStore<State>({
           commit("setActiveIntervals", []);
         }
       });
+    },
+    clearIntervalsIfExist({ state, commit }) {
+      if (state.race.activeIntervals.length) {
+        state.race.activeIntervals.forEach((interval) => {
+          clearInterval(interval);
+        });
+        commit("setActiveIntervals", []);
+        return true;
+      }
     },
   },
 });

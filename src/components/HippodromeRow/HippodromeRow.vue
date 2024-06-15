@@ -18,7 +18,7 @@ defineProps<HippodromeRowProps>();
           left: distance + '%',
           color: color !== undefined ? colorCodes[color] : 'black',
         }"
-        class="relative w-16 h-16 transition-[left] ease-linear"
+        class="relative w-16 h-16 transition-[left] ease-linear duration-200"
       ></icon-horse-running>
     </td>
   </tr>
