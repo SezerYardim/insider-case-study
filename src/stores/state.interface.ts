@@ -1,7 +1,9 @@
+import { colors } from "@src/helpers/helpers";
+
 export interface Horse {
   name: string;
   condition: number;
-  color: string;
+  color: colors;
 }
 
 export interface State {

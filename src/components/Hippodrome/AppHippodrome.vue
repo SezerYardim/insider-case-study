@@ -10,6 +10,7 @@ import HippodromeRow from "@components/HippodromeRow/HippodromeRow.vue";
           :key="horse.horse?.name"
           :number="horse.position"
           :distance="horse.distance"
+          :color="horse.horse?.color"
         />
       </tbody>
     </table>

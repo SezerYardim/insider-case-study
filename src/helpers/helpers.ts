@@ -13,18 +13,50 @@ const horseNames = [
   "Doe",
 ] as const;
 
-const colors = [
-  "Yellow",
-  "Blue",
-  "Red",
-  "Green",
-  "Orange",
-  "Cyan",
-  "Purple",
-  "Gray",
-  "Brown",
-  "Pink",
-] as const;
+export type colors =
+  | "Yellow"
+  | "Blue"
+  | "Red"
+  | "Green"
+  | "Orange"
+  | "Cyan"
+  | "Purple"
+  | "Gray"
+  | "Brown"
+  | "Pink"
+  | "Maroon"
+  | "Olive"
+  | "Teal"
+  | "Navy"
+  | "Lime"
+  | "Magenta"
+  | "Apricot"
+  | "Beige"
+  | "Mint"
+  | "Lavender";
+
+export const colorCodes: Record<colors, string> = {
+  Yellow: "#ffe119",
+  Blue: "#4363d8",
+  Red: "#e6194B",
+  Green: "#3cb44b",
+  Orange: "#f58231",
+  Cyan: "#42d4f4",
+  Purple: "#911eb4",
+  Gray: "#a9a9a9",
+  Brown: "#9A6324",
+  Pink: "#fabed4",
+  Maroon: "#800000",
+  Olive: "#808000",
+  Teal: "#469990",
+  Navy: "#000075",
+  Lime: "#bfef45",
+  Magenta: "#f032e6",
+  Beige: "#fffac8",
+  Apricot: "#ffd8b1",
+  Mint: "#aaffc3",
+  Lavender: "#dcbeff",
+};
 
 function generateHorseName() {
   const nameArr = [...horseNames];
@@ -40,15 +72,16 @@ function randomCondition() {
   const condition = Math.round(Math.random() * 100);
   return condition > 50 ? condition : condition + 50; // to make it more competitive :)
 }
-function randomColor() {
-  return colors[Math.floor(Math.random() * colors.length)];
-}
 
-export function generateHorse() {
+export function generateHorse(): {
+  name: string;
+  condition: number;
+  color: colors;
+} {
   return {
     name: generateHorseName(),
     condition: randomCondition(),
-    color: randomColor(),
+    color: generateColorName(),
   };
 }
 
@@ -96,3 +129,53 @@ export function pickRandomElements<T>(array: T[], n: number): T[] {
   const shuffledArray = shuffleArray(array);
   return shuffledArray.slice(0, n);
 }
+
+function createColorNameGenerator() {
+  const colors = [
+    "Yellow",
+    "Blue",
+    "Red",
+    "Green",
+    "Orange",
+    "Cyan",
+    "Purple",
+    "Gray",
+    "Brown",
+    "Pink",
+    "Maroon",
+    "Olive",
+    "Teal",
+    "Navy",
+    "Lime",
+    "Magenta",
+    "Apricot",
+    "Beige",
+    "Mint",
+    "Lavender",
+  ] as const;
+
+  const uniqueColorNames: colors[] = [];
+
+  for (let i = 0; i < colors.length; i++) {
+    uniqueColorNames.push(`${colors[i]}`);
+  }
+
+  for (let i = uniqueColorNames.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [uniqueColorNames[i], uniqueColorNames[j]] = [
+      uniqueColorNames[j],
+      uniqueColorNames[i],
+    ];
+  }
+
+  let index = 0;
+
+  return function generateColorName(): colors {
+    if (index >= uniqueColorNames.length) {
+      throw new Error("All unique color names have been generated");
+    }
+    return uniqueColorNames[index++];
+  };
+}
+
+const generateColorName = createColorNameGenerator();
