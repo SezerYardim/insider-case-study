@@ -28,10 +28,10 @@ const colors = [
 
 function generateHorseName() {
   const nameArr = [...horseNames];
-  const name = horseNames[Math.round(Math.random() * horseNames.length)];
+  const name = horseNames[Math.floor(Math.random() * horseNames.length)];
   const remainingHorseNames = nameArr.filter((item) => item !== name);
   const surname =
-    remainingHorseNames[Math.round(Math.random() * horseNames.length)];
+    remainingHorseNames[Math.floor(Math.random() * remainingHorseNames.length)];
 
   return name + " " + surname;
 }
@@ -90,7 +90,7 @@ export function shuffleArray<T>(array: T[]): T[] {
 export function pickRandomElements<T>(array: T[], n: number): T[] {
   if (n > array.length) {
     throw new Error(
-      "The number of elements to pick is greater than the array length",
+      "The number of elements to pick is greater than the array length"
     );
   }
   const shuffledArray = shuffleArray(array);
