@@ -8,7 +8,7 @@ defineProps<HippodromeRowProps>();
 <template>
   <tr>
     <td width="30">
-      <hippodrome-number :number="number"></hippodrome-number>
+      <hippodrome-number :position="position || ' | '"></hippodrome-number>
     </td>
     <td
       class="border-y-2 border-y-dashed border-y-black w-80 border-r-8 border-r-red-500 border-r-solid"

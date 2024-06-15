@@ -18,7 +18,7 @@ export interface Run {
 }
 export interface Participant {
   horse: Horse | undefined;
-  position: number | undefined;
+  position: string | undefined;
   distance: number;
 }
 

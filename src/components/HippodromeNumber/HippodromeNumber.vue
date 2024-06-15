@@ -8,7 +8,7 @@ defineProps<HippodromeNumberProps>();
     class="py-6 px-5 flex items-center justify-center bg-green-500 border border-white"
   >
     <p class="-rotate-90 text-xl text-white font-semibold">
-      {{ number }}
+      {{ position }}
     </p>
   </div>
 </template>

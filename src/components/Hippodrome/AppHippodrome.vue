@@ -6,11 +6,11 @@ import HippodromeRow from "@components/HippodromeRow/HippodromeRow.vue";
     <table class="table-fixed border w-full">
       <tbody>
         <hippodrome-row
-          v-for="horse in $store.state.race.activeRun?.participants"
-          :key="horse.horse?.name"
-          :number="horse.position"
-          :distance="horse.distance"
-          :color="horse.horse?.color"
+          v-for="(participant, index) in $store.state.race.activeRun?.participants"
+          :key="participant?.horse?.name || index"
+          :position="participant?.position"
+          :distance="participant?.distance || 0"
+          :color="participant?.horse?.color"
         />
       </tbody>
     </table>
