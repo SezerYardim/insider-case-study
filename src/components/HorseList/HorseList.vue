@@ -7,20 +7,20 @@
       <Column
         field="name"
         header="Name"
-        bodyClass="text-sm"
-        headerClass="text-sm bg-slate-100"
+        body-class="text-sm"
+        header-class="text-sm bg-slate-100"
       ></Column>
       <Column
         field="condition"
         header="Condition"
-        bodyClass="text-sm"
-        headerClass="text-sm bg-slate-100"
+        body-class="text-sm"
+        header-class="text-sm bg-slate-100"
       ></Column>
       <Column
         field="color"
         header="Color"
-        bodyClass="text-sm"
-        headerClass="text-sm bg-slate-100"
+        body-class="text-sm"
+        header-class="text-sm bg-slate-100"
       ></Column>
     </DataTable>
   </div>
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
-import { useStore } from "@src/stores/store";
+import { useAppStore } from "@src/stores/store";
 
-const store = useStore();
+const store = useAppStore();
 </script>

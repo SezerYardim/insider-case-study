@@ -5,7 +5,10 @@
     </template>
     <template #end>
       <div class="flex align-items-center gap-2">
-        <Button label="Generate Program" />
+        <Button
+          label="Generate Program"
+          @click="$store.commit('generateRace')"
+        />
         <Button label="Start / Pause" />
       </div>
     </template>
