@@ -17,11 +17,13 @@ import ProgramList from "@components/ProgramList/ProgramList.vue";
           label="Program"
           label-class="bg-sky-800 text-white"
           :runs="$store.state.race.runs"
+          class="flex-1"
         ></program-list>
         <program-list
           label="Results"
           label-class="bg-red-700 text-white"
           :runs="$store.state.race.results"
+          class="flex-1"
         ></program-list>
       </div>
     </div>
