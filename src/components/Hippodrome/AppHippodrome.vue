@@ -2,8 +2,8 @@
 import HippodromeRow from "@components/HippodromeRow/HippodromeRow.vue";
 </script>
 <template>
-  <div>
-    <table class="table-fixed border">
+  <div class="w-full py-12">
+    <table class="table-fixed border w-full">
       <tbody>
         <hippodrome-row :number="1"></hippodrome-row>
         <hippodrome-row :number="2"></hippodrome-row>

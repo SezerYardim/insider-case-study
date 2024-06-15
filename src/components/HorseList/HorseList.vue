@@ -1,6 +1,6 @@
 <template>
-  <div class="card">
-    <DataTable :value="store.state.horseList">
+  <div class="card max-h-full">
+    <DataTable class="overflow-auto max-h-full" :value="store.state.horseList">
       <template #header>
         <p>Horse List</p>
       </template>

@@ -6,12 +6,13 @@ defineProps<HippodromeRowProps>();
 </script>
 <template>
   <tr>
-    <td>
+    <td width="65">
       <hippodrome-number :number="number"></hippodrome-number>
     </td>
-    <td class="border-y-2 border-dashed border-black w-80">
+    <td
+      class="border-y-2 border-y-dashed border-y-black w-80 border-r-8 border-r-red-500 border-r-solid"
+    >
       <icon-horse-running class="text-black w-16 h-16"></icon-horse-running>
     </td>
-    <td class="border-r-8 border-r-red-500"></td>
   </tr>
 </template>
