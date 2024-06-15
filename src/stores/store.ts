@@ -25,6 +25,7 @@ export const store = createStore<State>({
         results: [],
         activeRun: null,
         runIndex: 0,
+        activeIntervals: [],
       },
     };
   },
@@ -48,6 +49,9 @@ export const store = createStore<State>({
       if (!state.race.activeRun) return;
       state.race.activeRun.participants = payload.participants;
     },
+    setActiveIntervals(state, payload: NodeJS.Timeout[]) {
+      state.race.activeIntervals = payload;
+    },
   },
   actions: {
     generateRace({ state, commit }) {
@@ -62,10 +66,10 @@ export const store = createStore<State>({
                 horse: item,
                 position: index + 1,
                 distance: 0,
-              }),
+              })
             ),
           };
-        }),
+        })
       );
       commit(
         "setResults",
@@ -76,17 +80,25 @@ export const store = createStore<State>({
             horse: undefined,
             distance: 0,
           })),
-        })),
+        }))
       );
       commit("setActiveRun", state.race.runs[state.race.runIndex]);
     },
     startRace: async ({ state, commit }) => {
+      debugger;
+      if (state.race.activeIntervals.length) {
+        state.race.activeIntervals.forEach((interval) => {
+          clearInterval(interval);
+        });
+        commit("setActiveIntervals", []);
+        return;
+      }
       if (!state.race.activeRun) return;
       let position = 0;
       const racePromises = state.race.activeRun.participants.map<
         Promise<Participant>
       >((item) => {
-        return new Promise((resolve) => {
+        const finishPromise: Promise<Participant> = new Promise((resolve) => {
           const raceInterval = setInterval(() => {
             if (item.distance < 90) {
               if (item.horse) {
@@ -102,11 +114,17 @@ export const store = createStore<State>({
               resolve({ ...participant, position: position });
             }
           }, 100);
+          commit("setActiveIntervals", [
+            ...state.race.activeIntervals,
+            raceInterval,
+          ]);
         });
+        return finishPromise;
       });
       Promise.all(racePromises).then(() => {
         commit("setRunIndex", state.race.runIndex + 1);
         commit("setActiveRun", state.race.runs[state.race.runIndex]);
+        commit("setActiveIntervals", []);
       });
     },
   },

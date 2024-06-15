@@ -27,6 +27,7 @@ export interface Race {
   results: Run[];
   activeRun: Run | null;
   runIndex: number;
+  activeIntervals: NodeJS.Timeout[];
 }
 
 export type RunType = "1200m" | "1400m" | "1600m" | "1800m" | "2000m" | "2200m";
