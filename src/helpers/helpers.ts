@@ -1,17 +1,46 @@
 import { RunType } from "@src/stores/state.interface";
 
-const horseNames = [
-  "Ada",
-  "Lovelace",
-  "Grace",
-  "Hopper",
-  "Margaret",
-  "Hamilton",
-  "Joan",
-  "Clarke",
-  "John",
-  "Doe",
-] as const;
+function createHorseNameGenerator() {
+  const horseNames = [
+    "Ada",
+    "Lovelace",
+    "Grace",
+    "Hopper",
+    "Margaret",
+    "Hamilton",
+    "Joan",
+    "Clarke",
+    "John",
+    "Doe",
+  ] as const;
+
+  const uniqueHorseNames: string[] = [];
+
+  for (let i = 0; i < horseNames.length; i++) {
+    for (let j = 0; j < horseNames.length; j++) {
+      if (i !== j) {
+        uniqueHorseNames.push(`${horseNames[i]} ${horseNames[j]}`);
+      }
+    }
+  }
+
+  for (let i = uniqueHorseNames.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [uniqueHorseNames[i], uniqueHorseNames[j]] = [
+      uniqueHorseNames[j],
+      uniqueHorseNames[i],
+    ];
+  }
+
+  let index = 0;
+
+  return function generateHorseName() {
+    if (index >= uniqueHorseNames.length) {
+      throw new Error("All unique horse names have been generated");
+    }
+    return uniqueHorseNames[index++];
+  };
+}
 
 export type colors =
   | "Yellow"
@@ -58,15 +87,7 @@ export const colorCodes: Record<colors, string> = {
   Lavender: "#dcbeff",
 };
 
-function generateHorseName() {
-  const nameArr = [...horseNames];
-  const name = horseNames[Math.floor(Math.random() * horseNames.length)];
-  const remainingHorseNames = nameArr.filter((item) => item !== name);
-  const surname =
-    remainingHorseNames[Math.floor(Math.random() * remainingHorseNames.length)];
-
-  return name + " " + surname;
-}
+const generateHorseName = createHorseNameGenerator();
 
 function randomCondition() {
   const condition = Math.round(Math.random() * 100);
