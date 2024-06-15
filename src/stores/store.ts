@@ -82,10 +82,10 @@ export const store = createStore<State>({
           })),
         }))
       );
+      commit("setRunIndex", 0);
       commit("setActiveRun", state.race.runs[state.race.runIndex]);
     },
     startRace: async ({ state, commit }) => {
-      debugger;
       if (state.race.activeIntervals.length) {
         state.race.activeIntervals.forEach((interval) => {
           clearInterval(interval);
@@ -102,7 +102,7 @@ export const store = createStore<State>({
           const raceInterval = setInterval(() => {
             if (item.distance < 90) {
               if (item.horse) {
-                item.distance += item.horse.condition / 100;
+                item.distance += item.horse.condition / 25;
               }
             } else {
               const participant = { ...item, position };
@@ -122,9 +122,13 @@ export const store = createStore<State>({
         return finishPromise;
       });
       Promise.all(racePromises).then(() => {
-        commit("setRunIndex", state.race.runIndex + 1);
-        commit("setActiveRun", state.race.runs[state.race.runIndex]);
-        commit("setActiveIntervals", []);
+        if (state.race.runIndex > 5) {
+          return;
+        } else {
+          commit("setRunIndex", state.race.runIndex + 1);
+          commit("setActiveRun", state.race.runs[state.race.runIndex]);
+          commit("setActiveIntervals", []);
+        }
       });
     },
   },
