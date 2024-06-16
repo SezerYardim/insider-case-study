@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --config eslint.config.js"
+    "lint": "eslint --config eslint.config.js",
+    "test": "vitest"
   },
   "dependencies": {
     "primevue": "^3.52.0",
