@@ -1,6 +1,6 @@
 import { RunType } from "@src/stores/state.interface";
 
-function createHorseNameGenerator() {
+export function createHorseNameGenerator() {
   const horseNames = [
     "Ada",
     "Lovelace",
@@ -89,8 +89,13 @@ export const colorCodes: Record<colors, string> = {
 
 const generateHorseName = createHorseNameGenerator();
 
-function randomCondition() {
-  const condition = Math.round(Math.random() * 100);
+export function randomCondition() {
+  const condition = Math.floor(Math.random() * 100) + 1;
+  return condition;
+}
+
+function liftConditionIfLessThanFifty() {
+  const condition = randomCondition();
   return condition > 50 ? condition : condition + 50; // to make it more competitive :)
 }
 
@@ -101,7 +106,7 @@ export function generateHorse(): {
 } {
   return {
     name: generateHorseName(),
-    condition: randomCondition(),
+    condition: liftConditionIfLessThanFifty(),
     color: generateColorName(),
   };
 }
@@ -140,18 +145,19 @@ export function shuffleArray<T>(array: T[]): T[] {
   }
   return shuffled;
 }
+export const ELEMENTS_COUNT_EXCEEDS_ARRAY_LENGTH_ERROR = new Error(
+  "The number of elements to pick is greater than the array length"
+);
 
 export function pickRandomElements<T>(array: T[], n: number): T[] {
   if (n > array.length) {
-    throw new Error(
-      "The number of elements to pick is greater than the array length"
-    );
+    throw ELEMENTS_COUNT_EXCEEDS_ARRAY_LENGTH_ERROR;
   }
   const shuffledArray = shuffleArray(array);
   return shuffledArray.slice(0, n);
 }
 
-function createColorNameGenerator() {
+export function createColorNameGenerator() {
   const colors = [
     "Yellow",
     "Blue",

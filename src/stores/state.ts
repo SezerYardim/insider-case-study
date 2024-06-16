@@ -1,6 +1,7 @@
 import { generateHorse, getOrdinalSuffix, runs } from "@src/helpers/helpers";
+import { State } from "./state.interface";
 
-export const state = () => {
+export const state = (): State => {
   const initialRuns = runs.map((run, index) => ({
     name: getOrdinalSuffix(index + 1) + " " + "Lap" + " " + run,
     type: run,
