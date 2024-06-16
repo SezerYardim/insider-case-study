@@ -6,10 +6,12 @@ import ProgramList from "@components/ProgramList/ProgramList.vue";
 </script>
 
 <template>
-  <div class="h-screen flex flex-col">
-    <app-header class="flex-grow-0 flex-shrink-0"></app-header>
+  <div class="h-screen flex flex-col overflow-hidden">
+    <app-header class="flex-grow-0 flex-shrink-0 basis-auto"></app-header>
 
-    <div class="px-6 py-4 flex space-x-8 justify-around flex-1 h-full">
+    <div
+      class="px-6 py-4 flex space-x-8 justify-around flex-auto overflow-auto"
+    >
       <horse-list></horse-list>
       <app-hippodrome class="flex-1"></app-hippodrome>
       <div class="flex space-x-3 max-h-full overflow-auto">
