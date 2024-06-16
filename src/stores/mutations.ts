@@ -1,4 +1,4 @@
-import { Participant, Race, Run, State } from "./state.interface";
+import { Participant, Run, State } from "./state.interface";
 
 export const mutations = {
   setActiveRun(state: State, payload: Run) {
@@ -12,9 +12,6 @@ export const mutations = {
   },
   setResults(state: State, results: Run[]) {
     state.race.results = results;
-  },
-  setRace(state: State, race: Race) {
-    state.race = race;
   },
   start(state: State, payload: { participants: Participant[] }) {
     if (!state.race.activeRun) return;
